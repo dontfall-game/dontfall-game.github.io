@@ -1,0 +1,494 @@
+/* 《先不要倒！》官方網站
+   版面概念：奶油色桌面上的一座點心塔。首頁左文右塔，內頁是一張好讀的「餐墊紙」。
+   全站只用一套亮色（跟遊戲一致），所有顏色都寫成 token。 */
+:root {
+  --cream: #fff8ec;      /* 桌面／背景 */
+  --paper: #fffdf8;      /* 卡片、內頁紙 */
+  --crumb: #f6ead8;      /* 次要底色（像餅乾屑） */
+  --ink: #4a2e22;        /* 主要文字：可可色 */
+  --ink-soft: #85664f;   /* 次要文字 */
+  --coral: #f26b6b;      /* 主色：草莓糖霜 */
+  --coral-deep: #c9474f; /* 按鈕陰影、連結 hover */
+  --plate: #8ec5ea;      /* 點綴：盤子藍 */
+  --line: rgba(74, 46, 34, 0.12);
+
+  --font-body: 'DFRound', 'PingFang TC', 'Heiti TC', 'Noto Sans TC', system-ui, sans-serif;
+  --font-num: 'Fredoka', 'DFRound', 'Avenir Next Rounded', system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2.1rem, 6vw, 2.8rem);
+  --step-4: clamp(3.2rem, 11vw, 5.6rem);
+
+  --radius: 22px;
+  color-scheme: light;
+}
+
+@font-face {
+  font-family: 'DFRound';
+  src: url('fonts/dfround.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('fonts/fredoka-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.75;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: var(--coral-deep);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 3px solid var(--plate);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* ── 頁首 ── */
+.site-head {
+  padding-block: 18px;
+}
+.site-head .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--step-1);
+}
+.brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+.nav {
+  display: flex;
+  gap: 4px 18px;
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+}
+.nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 6px 2px;
+}
+.nav a[aria-current='page'],
+.nav a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+}
+
+/* ── 首頁主視覺 ── */
+.hero .wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 24px 40px;
+  padding-block: 24px 40px;
+}
+.hero h1 {
+  font-size: var(--step-4);
+  letter-spacing: 0.02em;
+  text-shadow: 0 5px 0 rgba(242, 107, 107, 0.22);
+}
+.hero h1 .tilt {
+  display: inline-block;
+  transform-origin: 50% 90%;
+  animation: tip 3.2s ease-in-out infinite;
+}
+.hero .en {
+  font-family: var(--font-num);
+  font-weight: 700;
+  color: var(--coral);
+  letter-spacing: 0.04em;
+  font-size: var(--step-1);
+  margin: 4px 0 18px;
+}
+.hero p.lead {
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+  max-width: 30em;
+  margin: 0 0 26px;
+}
+.tower {
+  justify-self: center;
+  width: min(100%, 360px);
+  transform-origin: 50% 96%;
+  animation: sway 4.2s ease-in-out infinite;
+  filter: drop-shadow(0 18px 24px rgba(120, 85, 60, 0.12));
+}
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.2deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+@keyframes tip {
+  0%,
+  70%,
+  100% {
+    transform: rotate(0);
+  }
+  80% {
+    transform: rotate(14deg);
+  }
+  90% {
+    transform: rotate(-4deg);
+  }
+}
+
+.store {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font-size: var(--step-1);
+  box-shadow: 0 5px 0 rgba(74, 46, 34, 0.25);
+}
+.store:hover {
+  color: var(--paper);
+  transform: translateY(-1px);
+}
+.store.soon {
+  background: var(--crumb);
+  color: var(--ink);
+  box-shadow: none;
+  font-size: var(--step-0);
+}
+.store small {
+  display: block;
+  font-size: var(--step--1);
+  opacity: 0.75;
+  line-height: 1.2;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+  padding: 0;
+  list-style: none;
+}
+.chips li {
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+/* ── 一局的三個表情 ── */
+.band {
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+}
+.band .wrap {
+  padding-block: 48px;
+}
+.section-title {
+  font-size: var(--step-3);
+  margin-bottom: 8px;
+}
+.section-sub {
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+}
+.moods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.moods li {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 6px;
+  min-width: 0;
+}
+.moods img {
+  width: min(100%, 220px);
+}
+.moods b {
+  font-size: var(--step-1);
+  font-weight: 400;
+}
+.moods span {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+.moods li + li {
+  position: relative;
+}
+.moods li + li::before {
+  content: '→';
+  position: absolute;
+  left: -14px;
+  top: 28%;
+  color: var(--coral);
+  font-family: var(--font-num);
+  font-size: 1.4rem;
+}
+
+/* ── 怎麼玩 ── */
+.howto .wrap {
+  padding-block: 56px 40px;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: s;
+}
+.steps li {
+  counter-increment: s;
+  min-width: 0;
+  padding: 22px 22px 20px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+}
+.steps li::before {
+  content: counter(s);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  background: var(--coral);
+  color: #fff;
+  font-family: var(--font-num);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.steps h3 {
+  font-size: var(--step-1);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+.steps p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+.note {
+  margin-top: 28px;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+/* ── 內頁（隱私權、條款、支援） ── */
+.doc .wrap {
+  max-width: 760px;
+  padding-block: 12px 56px;
+}
+.paper {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: clamp(22px, 5vw, 48px);
+}
+.paper > * + * {
+  margin-top: 1em;
+}
+.doc h1 {
+  font-size: var(--step-3);
+}
+.doc .meta {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  margin-top: 6px;
+}
+.lang {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+}
+.lang a {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--crumb);
+  color: var(--ink);
+  text-decoration: none;
+}
+.doc h2 {
+  font-size: var(--step-1);
+  margin-top: 2em;
+  padding-top: 0.6em;
+  border-top: 1px dashed var(--line);
+}
+.doc h2.lang-head {
+  font-size: var(--step-2);
+  border-top: 2px solid var(--line);
+  margin-top: 3em;
+}
+.doc ul,
+.doc ol {
+  padding-left: 1.3em;
+}
+.doc li + li {
+  margin-top: 0.35em;
+}
+.doc .summary {
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 16px 20px;
+}
+.doc .summary ul {
+  margin: 0.4em 0 0;
+}
+.toc {
+  font-size: var(--step--1);
+  columns: 2 14em;
+  column-gap: 2em;
+}
+.mail {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.mail code {
+  font-family: var(--font-num);
+  font-size: 1.05rem;
+  padding: 4px 12px;
+  border-radius: 10px;
+  background: var(--crumb);
+  color: var(--ink);
+  user-select: all;
+  word-break: break-all;
+}
+.faq details {
+  border-top: 1px dashed var(--line);
+  padding-block: 12px;
+}
+.faq summary {
+  cursor: pointer;
+  font-size: var(--step-1);
+  list-style-position: inside;
+}
+.faq details p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+}
+
+/* ── 頁尾 ── */
+.site-foot {
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+.site-foot .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding-block: 26px calc(26px + env(safe-area-inset-bottom, 0px));
+}
+.site-foot nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+.site-foot a {
+  color: var(--ink-soft);
+}
+
+/* ── 手機版 ── */
+@media (max-width: 760px) {
+  .hero .wrap {
+    grid-template-columns: minmax(0, 1fr);
+    text-align: center;
+  }
+  .hero p.lead {
+    margin-inline: auto;
+  }
+  .chips {
+    justify-content: center;
+  }
+  .tower {
+    width: min(70%, 280px);
+    grid-row: 1;
+  }
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .moods {
+    gap: 8px;
+  }
+  .moods li + li::before {
+    left: -10px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tower,
+  .hero h1 .tilt {
+    animation: none;
+  }
+}
